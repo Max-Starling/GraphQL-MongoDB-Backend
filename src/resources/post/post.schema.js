@@ -2,7 +2,8 @@ module.exports = `
   type Post {
     _id: ID!
     title: String!
-    authorId: String
+    authorId: ID
+    author: Author
   }
 
   type Query {
@@ -12,7 +13,7 @@ module.exports = `
 
   type Mutation {
     createPost (authorId: ID!, title: String!) : Post!
-    updatePost (_id: ID!, title: String, authorId: String) : Post!
+    updatePost (_id: ID!, title: String, authorId: ID) : Post!
     deletePost (_id: ID!): Post!
   }
 `;
