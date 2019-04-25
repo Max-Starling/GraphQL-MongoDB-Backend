@@ -1,4 +1,5 @@
 const authorService = require('./author.service');
+const postService = require('../post/post.service');
 
 module.exports = ({
   Query: {
@@ -20,7 +21,7 @@ module.exports = ({
     deleteAuthor: (parent, query) => authorService.remove(query),
   },
 
-  // Author: {
-  //   posts: ({ _id }) => 
-  // }
+  Author: {
+    posts: ({ _id }) => postService.find({ authorId: _id }),
+  }
 });

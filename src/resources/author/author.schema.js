@@ -2,6 +2,7 @@ module.exports = `
   type Author {
     _id: ID!
     name: String!
+    posts: [Post]
   }
 
   type Query {
