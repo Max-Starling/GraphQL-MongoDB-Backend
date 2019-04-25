@@ -1,5 +1,5 @@
 const ObjectID = require('mongodb').ObjectID;
-const modifyQuery = require('./modifyQuery');
+const wrapIdField = require('./wrapIdField');
 
 module.exports = (collectionName, db) => {
   const database = db || global.db;
@@ -14,13 +14,13 @@ module.exports = (collectionName, db) => {
     const service = { ...collection };
   
     service.find = async (query, projection) => {
-      const modifiedQuery = modifyQuery(query);
+      const modifiedQuery = wrapIdField(query);
       const result = await collection.find(modifiedQuery, projection).toArray();
       return result;
     }
 
     service.findOne = async (query, projection) => {
-      const modifiedQuery = modifyQuery(query);
+      const modifiedQuery = wrapIdField(query);
       const result = await collection.findOne(modifiedQuery, projection);
       return result;
     }
@@ -41,7 +41,7 @@ module.exports = (collectionName, db) => {
     service.update = async (filter, update, options) => {
       try {
         const result = await collection.findOneAndUpdate(
-          modifyQuery(filter),
+          wrapIdField(filter),
           { $set: update },
           {
             returnOriginal: false, 
@@ -56,7 +56,7 @@ module.exports = (collectionName, db) => {
     };
 
     service.remove = async (query) => {
-      const modifiedQuery = modifyQuery(query);
+      const modifiedQuery = wrapIdField(query);
       const result = await collection.findOneAndDelete(modifiedQuery);
       return result.value;
     };

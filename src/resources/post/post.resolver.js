@@ -2,32 +2,21 @@ const postService = require('./post.service');
 
 module.exports = ({
   Query: {
-    posts: async () => {
-      const posts = await postService.find();
-      return posts;
-    },
-    post: async (parent, query) => {
-      const post = await postService.findOne(query);
-      return post;
-    },
+    posts: () => postService.find(),
+    post: (parent, query) => postService.findOne(query),
   },
 
   Mutation: {
-    createPost: async (parent, document) => {
-      const newPost = await postService.create(document);
-      return newPost;
-    },
+    createPost: (parent, document) => postService.createPost(document),
+
     updatePost: async (parent, { _id, ...remainingDocument }) => {
       const post = await postService.find({ _id });;
       if (!post) {
         throw new Error(`Couldn't find post with id ${id}`);
       }
-      const updatedPost = postService.update({ _id }, remainingDocument);
-      return updatedPost;
+      return postService.updatePost({ _id }, remainingDocument);
     },
-    deletePost: async (parent, query) => { 
-      const deletedPost = await postService.remove(query);
-      return deletedPost;
-    },
+
+    deletePost: (parent, query) => postService.remove(query),
   },
 });

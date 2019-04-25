@@ -2,32 +2,25 @@ const authorService = require('./author.service');
 
 module.exports = ({
   Query: {
-    authors: async () => {
-      const authors = await authorService.find();
-      return authors;
-    },
-    author: async (parent, query) => {
-      const author = await authorService.findOne(query);
-      return author;
-    },
+    authors: async () => authorService.find(),
+    author: async (parent, query) => authorService.findOne(query),
   },
 
   Mutation: {
-    createAuthor: async (parent, document) => {
-      const newPost = await authorService.create(document);
-      return newPost;
-    },
+    createAuthor: (parent, document) => authorService.create(document),
+  
     updateAuthor: async (parent, { _id, ...remainingDocument }) => {
       const author = await authorService.find({ _id });;
       if (!author) {
         throw new Error(`Couldn't find author with id ${id}`);
       }
-      const updatedAuthor = authorService.update({ _id }, remainingDocument);
-      return updatedAuthor;
+      return authorService.update({ _id }, remainingDocument);
     },
-    deleteAuthor: async (parent, query) => { 
-      const deletedAuthor = await authorService.remove(query);
-      return deletedAuthor;
-    },
+  
+    deleteAuthor: (parent, query) => authorService.remove(query),
   },
+
+  // Author: {
+  //   posts: ({ _id }) => 
+  // }
 });

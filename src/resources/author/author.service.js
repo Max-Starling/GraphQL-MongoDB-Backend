@@ -1,6 +1,6 @@
 const createService = require('../../helpers/createService');
 
-const service = createService('post');
+const service = createService('author');
 
 // service.createPost = async (document) => {
 //   const post = await service.create(document);
