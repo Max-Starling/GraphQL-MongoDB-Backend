@@ -1,26 +1,30 @@
 const mongo = require('mongodb').MongoClient;
 const config = require('../config');
+const isFunction = require('./isFunction');
 
 module.exports = async (resolve, reject, force = true) => {
-  if (global.db && !force) {
-    if (resolve && typeof resolve === "function") {
-      return resolve(global.db);
+  let database = global.db;
+
+  if (database && !force) {
+    if (isFunction(resolve)) {
+      return resolve(database);
     }
-    return global.db;
+    return database;
   }
 
   try {
     const client = await mongo.connect(config.dbUrl, { useNewUrlParser: true });
-    global.db = client.db(config.dbName);
+    database = client.db(config.dbName);
+    global.db = database;
     warn(`Connected to MongoDB: "${config.dbUrl}"`);
-    if (resolve && typeof resolve === "function") {
-      resolve(global.db);
+    if (isFunction(resolve)) {
+      resolve(database);
     }
-    return global.db;
+    return database;
   } catch (err) {
     logError(err);
     // throw err;
-    if (reject && typeof reject === "function") {
+    if (isFunction(reject)) {
       reject(err);
     }
     return err;
