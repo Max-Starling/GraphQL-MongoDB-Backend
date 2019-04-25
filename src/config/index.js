@@ -6,6 +6,8 @@ const config = {
   development: {
     apiUrl: `http://localhost:${port}`,
     port,
+    dbUrl: 'mongodb://localhost:27017',
+    dbName: 'starling'
   }
 };
 
