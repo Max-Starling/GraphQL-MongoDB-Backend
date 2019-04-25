@@ -1,16 +1,5 @@
 const ObjectID = require('mongodb').ObjectID;
-
-const modifyQuery = (query) => {
-  let modifiedQuery = query;
-  if (query && query._id) {
-    const { _id, ...remainingQuery } = query;
-    modifiedQuery = {
-      _id: ObjectID(_id),
-      ...remainingQuery,
-    };
-  }
-  return modifiedQuery;
-};
+const modifyQuery = require('./modifyQuery');
 
 module.exports = (collectionName, db) => {
   const database = db || global.db;
@@ -55,7 +44,7 @@ module.exports = (collectionName, db) => {
           modifyQuery(filter),
           { $set: update },
           {
-            returnNewDocument: true, 
+            returnOriginal: false, 
             ...options,
           },
         );
