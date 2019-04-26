@@ -4,7 +4,7 @@
 
 **Clone project**: 
 ```git
-git clone https://github.com/Max-Starling/Koa-GraphQL-MongoDB-Training.git
+git clone https://github.com/Max-Starling/GraphQL-MongoDB-Backend.git
 ```
 **Create database. You can do it via GUI like [MongoDB Compass](https://www.mongodb.com/products/compass), or by using [mongo shell](https://docs.mongodb.com/manual/mongo/)**:
 ```js
