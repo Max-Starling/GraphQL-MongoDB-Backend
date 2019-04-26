@@ -42,10 +42,10 @@ npm start
 POST 
 Content-Type: application/graphql
 ```
-**You can do it outside the project (recommended) via tools like [Postman](https://www.getpostman.com/) or do it inside via packages like [axious](https://github.com/axios/axios):**
+**You can do it outside the project (recommended) via tools like [Postman](https://www.getpostman.com/) or do it inside via packages like [axios](https://github.com/axios/axios):**
 ```js
 const your_request_body = { /*...*/ };
-axious.post("http://localhost:4000/graphql", your_request_body, {
+axios.post("http://localhost:4000/graphql", your_request_body, {
     headers: { Content-Type: "application/graphql" }
 });
 ```
